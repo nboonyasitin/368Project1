@@ -166,8 +166,11 @@ function RandomInt(min, max)
 function EndGame()
 {
     localStorage.clear();
+    gameSpeed = 3;
+    gravity = 1;
+    roses = 3;
+    score = 0;
     highscore = 0;
-    
 }
 
 
@@ -235,13 +238,14 @@ function UpdateSailor()
 
             roses = roses - 1;
                 //if roses = 0, tuxedo mask will save you on the next enemy that hits you. after the next hit, the game ends.
+                console.log("Roses:");
+                console.log(roses);
+
                 if(roses == 0)
                 {
                     EndGame();
+                    // StartGame();
                 }
-            console.log("Roses:");
-            console.log(roses);
-           
 
             monsters = [];
             score = 0;
