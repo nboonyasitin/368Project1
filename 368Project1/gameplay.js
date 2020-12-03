@@ -9,6 +9,8 @@ let sailor;
 let gravity;
 let monsters = [];
 let gameSpeed;
+let roses;
+let rosesText;
 let keys = {};
 var usagi = new Image();
 usagi.src = './usagi.png';
@@ -30,12 +32,13 @@ document.addEventListener('keyup', function (evt)
 
 class Sailor
 {
-    constructor(xPosition, yPosition, width, height)  
+    constructor(xPosition, yPosition, width, height, roses)  
     {
         this.xPosition = xPosition;
         this.yPosition = yPosition;
         this.width = width;
         this.height = height;
+        this.roses = roses;
 
         this.yDirection = 0; 
         this.jumpForce = 15;
@@ -160,6 +163,13 @@ function RandomInt(min, max)
     return(Math.round(Math.random() *(max - min)+ min));
 }
 
+function EndGame()
+{
+    localStorage.clear();
+    highscore = 0;
+    
+}
+
 
 function StartGame()
 {
@@ -169,7 +179,7 @@ function StartGame()
 
     gameSpeed = 3;
     gravity = 1;
-
+    roses = 3;
     score = 0;
     highscore = 0;
 
@@ -178,10 +188,11 @@ function StartGame()
         highscore = localStorage.getItem('highscore');
     }
 
-    sailor = new Sailor(25, 0, 175, 150);
+    sailor = new Sailor(25, 0, 175, 150, 3);
 
     scoreText = new Text("Score: " + score, 25, 25, "left", "#212121", "20");
-    highscoreText = new Text("Highscore: " + highscore, canvas.width - 25, 25, "right", "#212121", "20");
+    highscoreText = new Text("Highscore: " + highscore, 600, 25, "right", "#212121", "20");
+    rosesText = new Text("Roses: " + highscore, canvas.width - 50, 25, "right", "#212121", "20");
 
     requestAnimationFrame(UpdateSailor);
 }
@@ -221,7 +232,17 @@ function UpdateSailor()
         {
             theme.pause();
             gameover.play();
-            
+
+            roses = roses - 1;
+                //if roses = 0, tuxedo mask will save you on the next enemy that hits you. after the next hit, the game ends.
+                if(roses == 0)
+                {
+                    EndGame();
+                }
+            console.log("Roses:");
+            console.log(roses);
+           
+
             monsters = [];
             score = 0;
             spawnTimer = initialSpawnTimer;
@@ -231,6 +252,9 @@ function UpdateSailor()
         m.UpdateMonster();
     }
     sailor.AnimateSailor();
+
+    rosesText.text = "Roses: " + roses;
+    rosesText.DrawText();
 
     score++;
     scoreText.text = "Score: " + score;
