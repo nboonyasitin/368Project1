@@ -18,7 +18,7 @@ void Driver::run(std::string arg)
     if(inFile.is_open())
     {
         while(inFile >> contents)
-        {
+        {   
             if(contents == ",")
             {
                 std::cout << " , ";

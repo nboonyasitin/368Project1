@@ -11,7 +11,7 @@ class Driver
     private: 
         std::string contents;
         std::string name;
-        int idNum = 0;
+        int id = 0;
 
     public:
         Driver();
