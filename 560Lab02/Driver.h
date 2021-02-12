@@ -17,6 +17,7 @@ class Driver
         Driver();
         ~Driver();
         void run(std::string arg);
+        void menu();
 
 };
 #endif
